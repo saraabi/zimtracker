@@ -40,6 +40,8 @@ INSTALLED_APPS = [
     'django_extensions',
     'crispy_forms',
     'zimtracker',
+    'django_celery_beat',
+    'django_celery_results',
 ]
 
 MIDDLEWARE = [
