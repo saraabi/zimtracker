@@ -14,6 +14,7 @@ def update_vessels():
         api_key=settings.MARINETRAFFIC_API_KEY)
     vessels = api.fleet_vessel_positions(time_span=60, 
         msg_type='extended')
+    print(vessels.meta)
     for vessel in vessels.models:
         print('updating vessel')
         update_vessel_data(vessel)
