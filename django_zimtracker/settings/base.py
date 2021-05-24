@@ -118,6 +118,15 @@ STATIC_URL = '/static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+CELERY_BROKER_URL = os.environ.get('REDIS_URL')
+CELERY_RESULT_BACKEND = os.environ.get('REDIS_URL')
+CELERY_ACCEPT_CONTENT = ['application/json']
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_RESULT_SERIALIZER = 'json'
+
+SERVER_EMAIL = 'noreply@zimtracker.com'
+DEFAULT_FROM_EMAIL = 'admin@zimtracker.com'
+
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 MARINETRAFFIC_API_KEY = get_env_variable('MARINETRAFFIC_API_KEY')
