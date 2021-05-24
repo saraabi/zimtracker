@@ -1,0 +1,104 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+
+{% block header %}
+<div class="Hero" style="height:600px;width:100vw;background:black;overflow:hidden;background: -webkit-linear-gradient(rgba(206, 17, 38, 0.9),rgba(150,150,150, 2), rgba(0,122,61, 0.9));"> 
+  <section style="height:100%" class='hero-header-text'>
+    <div style="height:93%;display:flex;justify-content:center;align-items:center;flex-direction:column">
+    <h1 style="font-size: 90px;font-family:'Montserrat';font-weight:100;" class="text-dark text-center">ZIMTRACKER</h1>
+    <h2 style="font-family:'Montserrat';font-weight:120;" class="text-dark text-center pb-5">Stop Israeli Apartheid Profiteering</h2>
+    <a href="{% url 'vessel-list' %}" class="text-dark"><button class="btn btn-outline-light btn-lg">Track Ship</button></a>
+    </div>
+<!--     <p class="pt-auto ml-auto w-25"><a href="https://www.facebook.com/movementphotographer/" class="text-white">Photo Credit: Brooke Anderson</a></p> -->
+  </section>
+</div>
+{% endblock %}
+{% block main %}
+<!-- <div style="background-color:#27241D" class="w-100"> -->
+<div class="w-100 bg-dark pb-5">
+  <div class="w-75 mx-auto py-5">
+    <h3 style="font-family:'Montserrat';font-size:2.5rem;font-weight:200;" class="pb-5 text-white text-center">Track Israeli Ships</h3>
+    <div class="d-flex justify-content-between">
+      <div class="w-25">
+        <div style="border-radius:.75rem;" class="card">
+          <div class="card-body">
+            <div class="d-flex align-items-center">
+              <div class="Icons">
+                <a class="text-dark" href=""><i class="fas fa-ship fa-3x pr-4"></i></a>
+              </div>
+              <div>
+                <h5 class="card-title"><a class="text-dark" href="{% url 'vessel-list' %}">Find a Ship</a></h5>
+                <p class="card-text"><a class="text-dark" href="">{{ vessel_list.count|default:"no" }} ships currently tracked</a></p>
+              </div>
+            </div>
+          </div>
+          <div style="border-radius:0 0 .75rem .75rem;" class="card-footer">
+            <a href="" class="d-block text-dark text-center mb-0">Add Ship<i class="fas fa-angle-right pl-1"></i></a>
+          </div>
+        </div>
+      </div>
+      <div class="w-25">
+        <div style="border-radius:.75rem;" class="card">
+          <div class="card-body">
+            <div class="d-flex align-items-center">
+              <div class="Icons">
+                <a class="text-dark" href=""><i class="fas fa-person-sign fa-3x pr-4"></i></a>
+              </div>
+              <div>
+                <h5 class="card-title"><a class="text-dark" href="">Organize a Response</a></h5>
+                <p class="card-text"><a class="text-dark" href="">Organize a Block the Boat action</a></p>
+              </div>
+            </div>
+          </div>
+          <div style="border-radius:0 0 .75em .75rem;" class="card-footer">
+            <a href="" class="d-block text-dark text-center mb-0">Plan Event<i class="fas fa-angle-right pl-1"></i></a>
+          </div>
+        </div>
+      </div>
+      <div class="w-25">
+        <div style="border-radius:.75rem;" class="card">
+          <div class="card-body">
+            <div class="d-flex align-items-center">
+              <div class="Icons">
+                <a class="text-dark" href=""><i class="fas fa-comments fa-3x pr-4"></i></a>
+              </div>
+              <div>
+                <h5 class="card-title"><a class="text-dark" href="">Send Alerts</a></h5>
+                <p class="card-text"><a class="text-dark" href="">Send updates to {{ contact_list.count|default:"0" }} contacts</a></p>
+              </div>
+            </div>
+          </div>
+          <div style="border-radius:0 0 .75rem .75rem;" class="card-footer">
+            <a href="" class="d-block text-dark text-center mb-0">Send Alert<i class="fas fa-angle-right pl-1"></i></a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="py-5 bg-light w-100">
+  <h3 style="font-family:'Montserrat';font-size:2.5rem;font-weight:200;" class="pb-5 text-dark text-center">Sign Up To Request Access</h3>
+  <form style="max-width:500px;" class="w-50 mx-auto" method="POST">
+    {% csrf_token %}
+    <input type="text" name="name" placeholder="Name" class="form-control mb-4">
+    <input type="email" name="email" placeholder="Email" class="form-control mb-4">
+    <input type="hidden" name="recaptcha" id="id_recaptcha">
+    <textarea name="body" placeholder="What do you plan to use it for?" class="form-control mb-4"></textarea>
+    <input type="submit" value="Submit" class="btn btn-danger px-4">
+  </form>
+</div>
+ <script src="https://www.google.com/recaptcha/api.js?render={{ captcha_key }}"></script>
+  <script>
+    grecaptcha.ready(function() {
+      $('form').submit(function(e){
+        var form = this;
+        e.preventDefault()
+        grecaptcha.execute('{{ captcha_key }}', {action: 'signupform'}).then(function(token) {
+          $('form').find('#id_recaptcha').val(token);
+          form.submit();
+        });
+      });
+    });
+  </script>
+{% endblock %}

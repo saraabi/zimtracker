@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% block body %}
+<div class="d-flex justify-content-between">
+  <h1>Vessel List</h1>
+  <h2><a href=""><i class="fas fa-download pr-4"></i></a></h2>
+</div>
+<div class="card mt-5">
+  <table class="table" data-sorting="true">
+    <thead>
+      <tr>
+        <th scope="col">Name</th>
+        <th scope="col">Ship ID</th>
+        <th scope="col">Latitude</th>
+        <th scope="col">Longitude</th>
+        <th scope="col">Destination</th>
+        <th scope="col">ETA</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for vessel in vessel_list %}
+      <tr>
+        <th scope="row"><a href="{{ vessel.get_absolute_url }}">{{ vessel.name }}</a></th>
+        <td>{{ vessel.ship_id }}</td>
+        <td>{{ vessel.latitude }}</td>
+        <td>{{ vessel.longitude }}</td>
+        <td>{{ vessel.destination }}</td>
+        <td>{{ vessel.eta }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}
