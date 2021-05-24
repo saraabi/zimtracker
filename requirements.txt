@@ -2,8 +2,8 @@ Boto3
 redis
 celery==4.4.7
 django
-django_celery_beat
-django_celery_results
+django-celery-beat==2.1.0
+django-celery-results
 django-debug-toolbar
 django_redis_cache
 django-crispy-forms
