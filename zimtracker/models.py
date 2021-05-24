@@ -57,7 +57,7 @@ class Log(models.Model):
         ordering = ('-timestamp', 'vessel')
 
     def __str__(self):
-        return '{}: {}'.format(self.name, self.timestamp)
+        return '{}: {}'.format(self.vessel.name, self.timestamp)
 
     def get_mt_fields(self):
         return ('mmsi', 'latitude', 'longitude', 'speed', 
