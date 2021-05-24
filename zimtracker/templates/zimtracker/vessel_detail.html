@@ -1,0 +1,89 @@
+{% extends 'base.html' %}
+{% block body %}
+<h1>Ship Status: {{ vessel.name }}</h1>
+<div class="card p-4 VesselDetail">
+  <h2 class="h3">{{ message.body }}</h2>
+  <nav id="id_vesselNav" class="navbar navbar-expand-lg navbar-light">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarMessage" aria-controls="navbarMessage" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarVessel">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item active btn btn-outline-primary mr-1" target="#id_messageSend">
+          <a class="text-primary">Details</a>
+        </li>
+        <li class="nav-item btn btn-outline-danger mr-1" target="#id_messageEdit">
+          <a class="text-danger">Map</a>
+        </li>
+        <li class="nav-item btn btn-outline-info mr-1" target="#id_messageRecipients">
+          <a class="text-info">Logs</a>
+        </li>
+        <li class="nav-item btn btn-outline-secondary mr-1" target="#id_messageNotes">
+          <a class="text-secondary">Notes</a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+  <div class="card p-3 VesselCards" style="margin: 0 1rem;">
+    <div id="id_messageSend" class="collapse show">
+      <p><strong>Status: </strong></p>
+      <p>IMO: {{ vessel.imo }}</p>
+      <p>MarineTraffic ID: {{ vessel.ship_id }}</p>
+      <p>Location: {{ vessel.get_log.latitude }}, {{ vessel.get_log.longitude }}</p>
+      <p>Destination: {{ vessel.get_log.destination }}<p>
+      <p>ETA: {{ vessel.get_log.eta }}</p>
+      <p>Speed: {{ vessel.get_log.get_speed }} knots</p>
+      <p>Heading: {{ vessel.get_log.heading }} degrees</p>
+      <p>Course: {{ vessel.get_log.course }} degrees</p>
+      <p>Status: {{ vessel.get_log.status }}</p>
+    </div>
+    <div id="id_messageEdit" class="collapse">
+      <div id="id_shipMap"></div>
+    </div>
+    <div id="id_messageRecipients" class="collapse">
+      <h3>Status Log</h3>
+      <table class="table table-hover" data-sorting="true">
+        <thead>
+          <tr>
+            <th scope="col">Timestamp</th>
+            <th scope="col">Latitude</th>
+            <th scope="col">Longitude</th>
+            <th scope="col">Speed (Knots)</th>
+            <th scope="col">Destination</th>
+            <th scope="col">ETA</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for log in vessel.log_set.all %}
+          <tr>
+            <th scope="row">{{ log.timestamp }}</th>
+            <td>{{ log.latitude }}</td>
+            <td>{{ log.longitude }}</td>
+            <td>{{ log.get_speed }}</td>
+            <td>{{ log.destination }}</td>
+            <td>{{ log.eta }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    <div id="id_messageNotes" class="collapse">
+      <div class="mt-5">
+        {% include 'addins/notes.html' %}
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block javascript %}
+<script>
+  $('#navbarVessel .nav-item').click( function(e) {
+    $('.VesselCards .collapse').hide();
+    var obj_id = $( this ).attr('target');
+    $( obj_id ).slideDown();
+    $('#navbarVessel .nav-item').removeClass('active');
+    $( this ).addClass('active');
+  });
+</script>
+{% endblock %}
