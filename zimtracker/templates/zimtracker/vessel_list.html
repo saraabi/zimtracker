@@ -14,6 +14,7 @@
         <th scope="col">Longitude</th>
         <th scope="col">Destination</th>
         <th scope="col">ETA</th>
+        <th scope="col">Last Updated</th>
       </tr>
     </thead>
     <tbody>
@@ -25,6 +26,7 @@
         <td>{{ vessel.get_log.longitude }}</td>
         <td>{{ vessel.get_log.destination }}</td>
         <td>{{ vessel.get_log.eta }}</td>
+        <td>{{ vessel.get_log.timestamp }}</td>
       </tr>
       {% endfor %}
     </tbody>

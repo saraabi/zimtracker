@@ -16,9 +16,8 @@ class Home(View):
         return render(request, self.template_name, context)
 
     def get_context_data(self, **kwargs):
-        vessels = Vessel.objects.all()
         context = {
-            'vessels': vessels,
+            'vessel_list': Vessel.objects.all(),
         }
         return context
 
