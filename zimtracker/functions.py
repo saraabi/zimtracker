@@ -18,7 +18,7 @@ def update_vessels():
     for vessel in vessels.models:
         print('updating vessel')
         update_vessel_data(vessel)
-    return True
+    return vessels
 
 def update_vessel_data(v_data):
     ship_id = v_data.ship_id.value
