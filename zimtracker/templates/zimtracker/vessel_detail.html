@@ -38,7 +38,7 @@
       <p>Status: {{ vessel.get_log.status }}</p>
     </div>
     <div id="id_messageEdit" class="collapse">
-      <div id="id_shipMap"></div>
+      <div style="min-height:700px;" id="id_shipMap"></div>
     </div>
     <div id="id_messageRecipients" class="collapse">
       <h3>Status Log</h3>
@@ -112,6 +112,8 @@
 
   var options = {
     sizeAxis: { minValue: 1621909888, maxValue: 1653445888 },
+    height: 700,
+    width: 1400,
     // region: 'US-CA',
     // resolution: 'provinces',
     displayMode: 'markers',
