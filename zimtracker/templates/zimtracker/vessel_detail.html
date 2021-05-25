@@ -56,12 +56,12 @@
         <tbody>
           {% for log in vessel.log_set.all %}
           <tr>
-            <th scope="row">{{ log.timestamp }}</th>
+            <th scope="row">{{ log.timestamp }} UTC</th>
             <td>{{ log.latitude }}</td>
             <td>{{ log.longitude }}</td>
             <td>{{ log.get_speed }}</td>
             <td>{{ log.destination }}</td>
-            <td>{{ log.eta }}</td>
+            <td>{{ log.eta }} UTC</td>
           </tr>
           {% endfor %}
         </tbody>
