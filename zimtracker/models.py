@@ -69,6 +69,9 @@ class Log(models.Model):
             return self.speed / 10
         return ''
 
+    def get_epoch_time(self):
+        return self.timestamp.timestamp()
+
 class UserProfile(models.Model):
 
     user = models.OneToOneField(User, 

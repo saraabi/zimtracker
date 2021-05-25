@@ -86,4 +86,38 @@
     $( this ).addClass('active');
   });
 </script>
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<script type='text/javascript'>
+  google.charts.load('current', {
+    'packages': ['geochart'],
+    // Note: you will need to get a mapsApiKey for your project.
+    // See: https://developers.google.com/chart/interactive/docs/basic_load_libs#load-settings
+    'mapsApiKey': 'AIzaSyD-9tSrke72PouQMnMX-a7eZSW0jkFMBWY'
+  });
+  google.charts.setOnLoadCallback(drawMarkersMap);
+
+  function drawMarkersMap() {
+  var data = new google.visualization.DataTable();
+
+  data.addColumn('number', 'Lat');                               
+  data.addColumn('number', 'Long');
+  data.addColumn('number', 'Value'); 
+  data.addColumn({type:'string', role:'tooltip'});  
+
+  {% for log in vessel.log_set.all %}
+  data.addRows([[{{ log.latitude }},{{ log.longitude }},{{ log.get_epoch_time }},'{{ log.timestamp }}']]);
+  {% endfor %}
+
+  var options = {
+    sizeAxis: { minValue: 1621909888, maxValue: 1653445888 },
+    region: 'US-CA',
+    resolution: 'provinces',
+    displayMode: 'markers',
+    colorAxis: {colors: ['#e7711c', '#4374e0']} // orange to blue
+  };
+
+  var chart = new google.visualization.GeoChart(document.getElementById('id_shipMap'));
+  chart.draw(data, options);
+  };
+</script>
 {% endblock %}

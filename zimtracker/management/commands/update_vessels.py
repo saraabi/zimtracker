@@ -8,7 +8,7 @@ class Command(BaseCommand):
         try:
             vessels = update_vessels()
         except Exception as error:
-            self.stdout.write(self.style.ERROR(error))
+            self.stdout.write(self.style.ERROR(str(error)))
             return
         if hasattr(vessels, 'meta'):
             if vessels.meta['TOTAL_RESULTS'] > 0:
