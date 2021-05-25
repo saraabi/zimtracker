@@ -1,5 +1,6 @@
 import datetime
 
+from decimal import Decimal
 from django.contrib.auth.models import User
 from django.db import models
 from django.urls import reverse
@@ -46,6 +47,7 @@ class Log(models.Model):
     speed = models.IntegerField(blank=True, null=True)
     heading = models.IntegerField(blank=True, null=True)
     course = models.IntegerField(blank=True, null=True)
+    status = models.IntegerField(blank=True, null=True)
     dsrc = models.CharField(max_length=255, blank=True)
     flag = models.CharField(max_length=255, blank=True)
     destination = models.CharField(max_length=255, blank=True)
@@ -59,10 +61,26 @@ class Log(models.Model):
     def __str__(self):
         return '{}: {}'.format(self.vessel.name, self.timestamp)
 
-    def get_mt_fields(self):
-        return ('mmsi', 'latitude', 'longitude', 'speed', 
-            'heading', 'course', 'source', 'flag', 'status', 
-            'dsrc', 'destination', 'eta')
+    def get_fields(self):
+        return ('mmsi', 'speed', 'heading', 'course', 
+            'status', 'latitude', 'longitude', 'dsrc', 
+            'flag', 'destination', 'eta')
+
+    def get_field_type_dict(self):
+        return {'int': int, 'dec': Decimal, 'char': str}
+
+    def get_int_fields(self):
+        return ('mmsi', 'speed', 'heading', 'course', 
+            'status')
+
+    def get_dec_fields(self):
+        return ('latitude', 'longitude')
+
+    def get_char_fields(self):
+        return ('dsrc', 'flag', 'destination',)
+
+    def get_date_fields(self):
+        return ('eta',)
 
     def get_speed(self):
         if self.speed:

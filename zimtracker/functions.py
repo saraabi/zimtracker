@@ -12,8 +12,13 @@ Log = apps.get_model(app_label='zimtracker',
 def update_vessels():
     api = MarineTrafficApi(
         api_key=settings.MARINETRAFFIC_API_KEY)
-    vessels = api.fleet_vessel_positions(time_span=60, 
-        msg_type='extended')
+    try:
+        vessels = api.fleet_vessel_positions(time_span=60, 
+            msg_type='extended')
+        print('Extended Data')
+    except:
+        vessels = api.fleet_vessel_positions(time_span=60)
+        print('Basic Data')
     print(vessels.meta)
     for vessel in vessels.models:
         print('updating vessel')
@@ -32,12 +37,18 @@ def update_vessel_data(v_data):
         vessel.save()
     log, created = Log.objects.get_or_create(
         vessel=vessel,timestamp=v_data.timestamp.value)
-    if created:
-        for field in log.get_mt_fields():
-            if getattr(v_data, field, None):
-                setattr(log, field, getattr(v_data,field))
-        log.save()
-        print('Log created')
+    # if created:
+    for field in log.get_fields():
+    # for key, func in log.get_field_type_dict().items():
+    #     method = 'get_{}_fields'.format(key)
+    #     for field in getattr(log, method)():
+        value = getattr(v_data, field, None)
+        if value.value:
+            print(field, value.value)
+            setattr(log, field, value.value)
+    # log.eta = getattr(v_data, 'eta', None)
+    log.save()
+    print('Log created')
 
 
 

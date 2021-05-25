@@ -105,13 +105,15 @@
   data.addColumn({type:'string', role:'tooltip'});  
 
   {% for log in vessel.log_set.all %}
+  {% if log.latitude and log.longitude %}
   data.addRows([[{{ log.latitude }},{{ log.longitude }},{{ log.get_epoch_time }},'{{ log.timestamp }}']]);
+  {% endif %}
   {% endfor %}
 
   var options = {
     sizeAxis: { minValue: 1621909888, maxValue: 1653445888 },
-    region: 'US-CA',
-    resolution: 'provinces',
+    // region: 'US-CA',
+    // resolution: 'provinces',
     displayMode: 'markers',
     colorAxis: {colors: ['#e7711c', '#4374e0']} // orange to blue
   };
