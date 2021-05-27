@@ -26,4 +26,9 @@ class VesselList(ListView):
 
 class VesselDetail(DetailView):
     model = Vessel
-    
+
+    def get_context_data(self, **kwargs):
+        vessel = self.get_object()
+        context = super().get_context_data(**kwargs)
+        context['GOOGLEMAPS_API_KEY'] = settings.GOOGLEMAPS_API_KEY
+        return context

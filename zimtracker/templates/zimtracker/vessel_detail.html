@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load tz %}
 {% block body %}
 <h1>Ship Status: {{ vessel.name }}</h1>
 <div class="card p-4 VesselDetail">
@@ -40,6 +41,7 @@
     <div id="id_messageEdit" class="collapse">
       <div style="min-height:700px;" id="id_shipMap"></div>
     </div>
+    {% localtime on %}
     <div id="id_messageRecipients" class="collapse">
       <h3>Status Log</h3>
       <table class="table table-hover" data-sorting="true">
@@ -67,6 +69,7 @@
         </tbody>
       </table>
     </div>
+    {% endlocaltime %}
     <div id="id_messageNotes" class="collapse">
       <div class="mt-5">
         {% include 'addins/notes.html' %}
@@ -87,7 +90,7 @@
   });
 </script>
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-<script type='text/javascript'>
+<!-- <script type='text/javascript'>
   google.charts.load('current', {
     'packages': ['geochart'],
     // Note: you will need to get a mapsApiKey for your project.
@@ -123,5 +126,57 @@
   var chart = new google.visualization.GeoChart(document.getElementById('id_shipMap'));
   chart.draw(data, options);
   };
+</script> -->
+<script>
+  let map;
+
+  function initMap() {
+    map = new google.maps.Map(document.getElementById("id_shipMap"), {
+      center: { lat: {{ vessel.get_log.latitude }}, lng: {{ vessel.get_log.longitude }} },
+      zoom: 8,
+    });
+
+    svgMarker = {
+      path: "M20 21c-1.39 0-2.78-.47-4-1.32-2.44 1.71-5.56 1.71-8 0C6.78 20.53 5.39 21 4 21H2v2h2c1.38 0 2.74-.35 4-.99 2.52 1.29 5.48 1.29 8 0 1.26.65 2.62.99 4 .99h2v-2h-2zM3.95 19H4c1.6 0 3.02-.88 4-2 .98 1.12 2.4 2 4 2s3.02-.88 4-2c.98 1.12 2.4 2 4 2h.05l1.89-6.68c.08-.26.06-.54-.06-.78s-.34-.42-.6-.5L20 10.62V6c0-1.1-.9-2-2-2h-3V1H9v3H6c-1.1 0-2 .9-2 2v4.62l-1.29.42c-.26.08-.48.26-.6.5s-.15.52-.06.78L3.95 19zM6 6h12v3.97L12 8 6 9.97V6",
+      fillOpacity: 0.7,
+      strokeWeight: 0,
+      rotation: 0,
+      scale: 1.5,
+      anchor: new google.maps.Point(0,0),
+    }
+
+    {% for log in vessel.log_set.all %}
+    {% if log.latitude and log.longitude %}
+
+
+    arrowMarker = {
+      path: "M7.41 15.41L12 10.83l4.59 4.58L18 14l-6-6-6 6z",
+      fillOpacity: {{ log.get_opacity }},
+      strokeWeight: 0,
+      rotation: {% if log.course %}{{ log.course }}{% else %}0{% endif %},
+      scale: 1,
+      anchor: new google.maps.Point(15, 30),
+    }
+
+    new google.maps.Marker({
+      position: { lat:{{ log.latitude }}, lng: {{ log.longitude }} },
+      map,
+      title: "{{ log.timestamp }}",
+      {% if log == vessel.get_log %}
+      icon: svgMarker,
+      {% else %}
+      icon: arrowMarker,
+      {% endif %}
+    });
+    {% endif %}
+    {% endfor %}
+
+    // new google.maps.Marker({
+    //   position: { lat:{{ vessel.get_log.latitude }}, lng: {{ vessel.get_log.longitude }} },
+    //   map,
+      
+    //   title: "Hello World!",
+    // });
+  }
 </script>
 {% endblock %}

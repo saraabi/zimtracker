@@ -90,10 +90,19 @@ class Log(models.Model):
     def get_epoch_time(self):
         return self.timestamp.timestamp()
 
+    def get_opacity(self):
+        logs = self.vessel.log_set.order_by('timestamp')
+        i = 0
+        for log in logs:
+            i +=1
+            if log == self:
+                return i / logs.count()
+
 class UserProfile(models.Model):
 
     user = models.OneToOneField(User, 
         on_delete=models.CASCADE)
+    phone = models.CharField(max_length=30, blank=True)
     ships = models.ManyToManyField(Vessel, blank=True)
     is_admin = models.BooleanField(default=False)
 

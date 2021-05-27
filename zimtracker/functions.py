@@ -1,6 +1,8 @@
 from django.apps import apps
 from django.conf import settings
+
 from marinetrafficapi import MarineTrafficApi
+from twilio.rest import Client
 
 from .models import Vessel
 
@@ -48,9 +50,23 @@ def update_vessel_data(v_data):
             setattr(log, field, value.value)
     # log.eta = getattr(v_data, 'eta', None)
     log.save()
+    if created:
+        send_updates(log)
     print('Log created')
 
-
+def send_updates(log):
+    api_key = settings.TWILIO_API_KEY
+    secret = settings.TWILIO_SECRET_KEY
+    phone = settings.TWILIO_PHONE
+    client = Client(api_key, secret)
+    body = '[Ship Update] The {} has an updated status: \
+        https://zimtracker.herokuapp.com/vessel/'.format(
+        log.vessel.name, log.vessel.id
+    )
+    kwargs = {'_from': phone, 'body': body}
+    for user in log.vessel.userprofile_set.all():
+        kwargs['to'] = user.phone
+        client.messages.create(**kwargs)
 
 
 

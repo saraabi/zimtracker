@@ -126,12 +126,25 @@ CELERY_ACCEPT_CONTENT = ['application/json']
 CELERY_TASK_SERIALIZER = 'json'
 CELERY_RESULT_SERIALIZER = 'json'
 
+SENDGRID_API_KEY = get_env_variable('SENDGRID_API_KEY')
+EMAIL_HOST = 'smtp.sendgrid.net'
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'apikey'
+EMAIL_HOST_PASSWORD = SENDGRID_API_KEY
+EMAIL_USE_TLS = True
+
+TWILIO_API_KEY = get_env_variable('TWILIO_API_KEY')
+TWILIO_SECRET_KEY = get_env_variable('TWILIO_SECRET_KEY')
+TWILIO_PHONE = get_env_variable('TWILIO_PHONE')
+
 SERVER_EMAIL = 'noreply@zimtracker.com'
 DEFAULT_FROM_EMAIL = 'admin@zimtracker.com'
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 MARINETRAFFIC_API_KEY = get_env_variable('MARINETRAFFIC_API_KEY')
+
+GOOGLEMAPS_API_KEY = get_env_variable('GOOGLEMAPS_API_KEY')
 
 # Activate Django-Heroku.
 django_heroku.settings(locals())

@@ -15,6 +15,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-footable/3.1.6/footable.min.js"></script>
     <script src="https://kit.fontawesome.com/a17905b599.js" crossorigin="anonymous"></script>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
 
     <style>
       h1, h2, h3, h4, h5, p, th, td {
@@ -109,5 +110,9 @@
         </div>
       </div>
     </footer>
+    <script
+      src="https://maps.googleapis.com/maps/api/js?key={{ GOOGLEMAPS_API_KEY }}&callback=initMap&libraries=&v=weekly"
+      async
+    ></script>
   </body>
 </html>
