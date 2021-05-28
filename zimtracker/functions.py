@@ -60,7 +60,7 @@ def send_updates(log):
     phone = settings.TWILIO_PHONE
     client = Client(api_key, secret)
     body = '[Ship Update] The {} has an updated status: \
-        https://zimtracker.herokuapp.com/vessel/'.format(
+        https://zimtracker.herokuapp.com/vessels/{}'.format(
         log.vessel.name, log.vessel.id
     )
     kwargs = {'from_': phone, 'body': body}
