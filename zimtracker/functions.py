@@ -63,7 +63,7 @@ def send_updates(log):
         https://zimtracker.herokuapp.com/vessel/'.format(
         log.vessel.name, log.vessel.id
     )
-    kwargs = {'_from': phone, 'body': body}
+    kwargs = {'from_': phone, 'body': body}
     for user in log.vessel.userprofile_set.all():
         kwargs['to'] = user.phone
         client.messages.create(**kwargs)
