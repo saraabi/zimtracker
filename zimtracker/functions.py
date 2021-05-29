@@ -77,7 +77,7 @@ def send_email(to, subject, content):
         subject=subject,
         html_content=content)
     try:
-        api_key = get_settings_value('SENDGRID_API_KEY')
+        api_key = settings.SENDGRID_API_KEY
         sg = SendGridAPIClient(api_key)
         response = sg.send(message)
         print(response.status_code)
@@ -85,5 +85,6 @@ def send_email(to, subject, content):
         print(response.headers)
     except Exception as e:
         print('ERROR')
+        print(e)
         print(e.message)
 

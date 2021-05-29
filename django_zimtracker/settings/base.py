@@ -137,6 +137,9 @@ TWILIO_API_KEY = get_env_variable('TWILIO_API_KEY')
 TWILIO_SECRET_KEY = get_env_variable('TWILIO_SECRET_KEY')
 TWILIO_PHONE = get_env_variable('TWILIO_PHONE')
 
+RECAPTCHA_API_KEY = get_env_variable('RECAPTCHA_API_KEY')
+RECAPTCHA_SECRET_KEY = get_env_variable('RECAPTCHA_SECRET_KEY')
+
 SERVER_EMAIL = 'noreply@zimtracker.com'
 DEFAULT_FROM_EMAIL = 'admin@zimtracker.com'
 
