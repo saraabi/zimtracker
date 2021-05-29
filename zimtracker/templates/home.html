@@ -78,13 +78,14 @@
   </div>
 </div>
 <div class="py-5 bg-light w-100">
-  <h3 style="font-family:'Montserrat';font-size:2.5rem;font-weight:200;" class="pb-5 text-dark text-center">Sign Up To Request Access</h3>
+  <h3 style="font-family:'Montserrat';font-size:2.5rem;font-weight:200;" class="pb-5 text-dark text-center">Sign Up To Receive Updates</h3>
   <form style="max-width:500px;" class="w-50 mx-auto" method="POST">
     {% csrf_token %}
     <input type="text" name="name" placeholder="Name" class="form-control mb-4">
     <input type="email" name="email" placeholder="Email" class="form-control mb-4">
+    <input type="text" name="phone" placeholder="Phone Number" class="form-control mb-4">
     <input type="hidden" name="recaptcha" id="id_recaptcha">
-    <textarea name="body" placeholder="What do you plan to use it for?" class="form-control mb-4"></textarea>
+    <input type="text" name="location" placeholder="Location" class="form-control mb-4">
     <input type="submit" value="Submit" class="btn btn-danger px-4">
   </form>
 </div>

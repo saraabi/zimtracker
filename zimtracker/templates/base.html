@@ -30,6 +30,7 @@
 /*      .text-dark {
         color: #5D5D5D !important;
       }*/
+      
       .Messages {
         position: relative;
         width: 100%;
@@ -65,12 +66,30 @@
         .VesselDetail .card {
           border-radius: 0 0.3rem 0.3rem 0.3rem;
         }
-        #id_VesselNav {
+        #id_vesselNav {
           padding: .5rem 1rem 0;
         }
-        #id_VesselNav .nav-item {
+        #id_vesselNav .nav-item {
           border-radius: 0.3rem 0.3rem 0 0;
           width: 7rem;
+        }
+        @media only screen and (max-width: 900px) {
+          .w-90-r {
+            width: 90% !important;
+          }
+          .p-1-r {
+            padding: .25rem!important;
+          }
+          .mt-2-r {
+            margin-top: 0.5rem!important;
+          }
+          #id_vesselNav .nav-item {
+            border-radius: .25rem;
+            width: 100%;
+          }
+          .VesselCards {
+            margin-top: 1rem!important;
+          }
         }
     </style>
   </head>
@@ -83,7 +102,7 @@
     </header>
     <main class="bg-light" style="min-height: 700px;">
       {% block main %}
-        <div class="py-5 w-75 w-100-r mx-auto mb-5">
+        <div class="py-5 w-75 w-90-r mx-auto mb-5">
         {% block body %}
         {% endblock %}
         </div>

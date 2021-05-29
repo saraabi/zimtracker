@@ -2,24 +2,24 @@
 {% load tz %}
 {% block body %}
 <h1>Ship Status: {{ vessel.name }}</h1>
-<div class="card p-4 VesselDetail">
+<div class="card p-4 VesselDetail p-1-r">
   <h2 class="h3">{{ message.body }}</h2>
   <nav id="id_vesselNav" class="navbar navbar-expand-lg navbar-light">
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarMessage" aria-controls="navbarMessage" aria-expanded="false" aria-label="Toggle navigation">
+    <button class="navbar-toggler ml-auto" type="button" data-toggle="collapse" data-target="#navbarVessel" aria-controls="navbarVessel" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarVessel">
       <ul class="navbar-nav mr-auto">
-        <li class="nav-item active btn btn-outline-primary mr-1" target="#id_messageSend">
+        <li class="nav-item active btn btn-outline-primary mr-1 mt-2-r" target="#id_messageSend">
           <a class="text-primary">Details</a>
         </li>
-        <li class="nav-item btn btn-outline-danger mr-1" target="#id_messageEdit">
+        <li class="nav-item btn btn-outline-danger mr-1 mt-2-r" target="#id_messageEdit">
           <a class="text-danger">Map</a>
         </li>
-        <li class="nav-item btn btn-outline-info mr-1" target="#id_messageRecipients">
+        <li class="nav-item btn btn-outline-info mr-1 mt-2-r" target="#id_messageRecipients">
           <a class="text-info">Logs</a>
         </li>
-        <li class="nav-item btn btn-outline-secondary mr-1" target="#id_messageNotes">
+        <li class="nav-item btn btn-outline-secondary mr-1 mt-2-r" target="#id_messageNotes">
           <a class="text-secondary">Notes</a>
         </li>
       </ul>
