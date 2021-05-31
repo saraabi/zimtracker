@@ -18,6 +18,13 @@ class Port(models.Model):
     code = models.CharField(max_length=10, blank=True)
     city = models.ForeignKey(City, on_delete=models.CASCADE)
 
+    def __str__(self):
+        return self.name
+
+    def get_vessels(self):
+        vessels = Vessel.objects.filter(log__dest_port=self)
+        return vessels.distinct()
+
 class Vessel(models.Model):
 
     name = models.CharField(max_length=255, blank=True)

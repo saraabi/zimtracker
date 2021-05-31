@@ -134,9 +134,9 @@
       "</div>" +
       '<h4 id="firstHeading" class="pb-2">{{ vessel.name }}</h4>' +
       '<div id="bodyContent">' +
-      "<p>Destination: {{ vessel.destination }}</p>" +
-      "<p>ETA: {{ vessel.eta }} UTC</p>" +
-      "<p>Last Updated: {{ vessel.timestamp }}</p>" +
+      "<p>Destination: {{ vessel.get_log.destination }}</p>" +
+      "<p>ETA: {{ vessel.get_log.eta }} UTC</p>" +
+      "<p>Last Updated: {{ vessel.get_log.timestamp }}</p>" +
       {% if vessel.is_blocked %}
       '<h5 style="color:#dc3545;"><strong>Blocked for {{ vessel.blocked_days }} days</strong></h5>' +
       {% endif %}
