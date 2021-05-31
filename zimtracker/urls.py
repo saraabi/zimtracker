@@ -10,4 +10,8 @@ urlpatterns = [
         path('<pk>/', views.VesselDetail.as_view(),
             name='vessel-detail')
     ])),
+    path('ports/', include([
+        path('', views.PortList.as_view(), 
+            name='port-list'),
+    ])),
 ]

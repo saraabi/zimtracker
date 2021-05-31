@@ -124,12 +124,38 @@
 
     {% for vessel in vessel_list %}
     {% if vessel.get_log.latitude and vessel.get_log.longitude %}
+    {% if vessel.is_blocked %}
+      svgMarker.fillColor = "#dc3545"
+      svgMarker.fillOpacity = 0.9
+    {% endif %}
+    contentString{{ vessel.id }} =
+      '<div id="content">' +
+      '<div id="siteNotice" style="min-width:250px;">' +
+      "</div>" +
+      '<h4 id="firstHeading" class="pb-2">{{ vessel.name }}</h4>' +
+      '<div id="bodyContent">' +
+      "<p>Destination: {{ vessel.destination }}</p>" +
+      "<p>ETA: {{ vessel.eta }} UTC</p>" +
+      "<p>Last Updated: {{ vessel.timestamp }}</p>" +
+      {% if vessel.is_blocked %}
+      '<h5 style="color:#dc3545;"><strong>Blocked for {{ vessel.blocked_days }} days</strong></h5>' +
+      {% endif %}
+      '<p class="pt-2 text-center"><a href="{{ vessel.get_absolute_url }}">See More</a></p>' +
+      "</div>" +
+      "</div>";
 
-    new google.maps.Marker({
+    infowindow{{ vessel.id }} = new google.maps.InfoWindow({
+      content: contentString{{ vessel.id }},
+    });
+
+    marker{{ vessel.id }} = new google.maps.Marker({
       position: { lat:{{ vessel.get_log.latitude }}, lng: {{ vessel.get_log.longitude }} },
       map,
       title: "{{ vessel.get_log.timestamp }}",
       icon: svgMarker,
+    });
+    marker{{ vessel.id }}.addListener("click", () => {
+      infowindow{{ vessel.id }}.open(map, marker{{ vessel.id }});
     });
     {% endif %}
     {% endfor %}

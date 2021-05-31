@@ -5,6 +5,19 @@ from django.contrib.auth.models import User
 from django.db import models
 from django.urls import reverse
 
+class City(models.Model):
+
+    name = models.CharField(max_length=150)
+
+    def __str__(self):
+        return self.name
+
+class Port(models.Model):
+
+    name = models.CharField(max_length=150)
+    code = models.CharField(max_length=10, blank=True)
+    city = models.ForeignKey(City, on_delete=models.CASCADE)
+
 class Vessel(models.Model):
 
     name = models.CharField(max_length=255, blank=True)
@@ -22,7 +35,11 @@ class Vessel(models.Model):
     source = models.CharField(max_length=255, blank=True)
     flag = models.CharField(max_length=255, blank=True)
     destination = models.CharField(max_length=255, blank=True)
+    dest_port = models.ForeignKey(Port,
+        on_delete=models.SET_NULL, blank=True, null=True)
     eta = models.DateTimeField(blank=True, null=True)
+    is_blocked = models.BooleanField(default=False)
+    blocked_days = models.IntegerField(default=0)
 
     def __str__(self):
         return self.name
@@ -51,6 +68,8 @@ class Log(models.Model):
     dsrc = models.CharField(max_length=255, blank=True)
     flag = models.CharField(max_length=255, blank=True)
     destination = models.CharField(max_length=255, blank=True)
+    dest_port = models.ForeignKey(Port, 
+        on_delete=models.SET_NULL, blank=True, null=True)
     eta = models.DateTimeField(blank=True, null=True)
     timestamp = models.DateTimeField(blank=True, null=True)
     time_collected = models.DateTimeField(auto_now_add=True)
@@ -104,6 +123,7 @@ class UserProfile(models.Model):
         on_delete=models.CASCADE)
     phone = models.CharField(max_length=30, blank=True)
     ships = models.ManyToManyField(Vessel, blank=True)
+    ports = models.ManyToManyField(Port, blank=True)
     is_admin = models.BooleanField(default=False)
 
     def __str__(self):

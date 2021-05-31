@@ -2,7 +2,15 @@ from django.contrib import admin
 from django.urls import reverse
 from django.utils.html import format_html
 
-from .models import Log, UserProfile, Vessel
+from .models import City, Log, Port, UserProfile, Vessel
+
+@admin.register(City)
+class CityAdmin(admin.ModelAdmin):
+    list_display = (
+        'id',
+        'name',
+    )
+    list_display_links = list_display
 
 @admin.register(Log)
 class LogAdmin(admin.ModelAdmin):
@@ -18,6 +26,15 @@ class LogAdmin(admin.ModelAdmin):
     list_display_links = list_display
     list_select_related = ('vessel',)
     list_filter = ('vessel', 'destination')
+
+@admin.register(Port)
+class PortAdmin(admin.ModelAdmin):
+    list_display = (
+        'id',
+        'name',
+        'city',
+    )
+    list_display_links = list_display
 
 @admin.register(Vessel)
 class VesselAdmin(admin.ModelAdmin):

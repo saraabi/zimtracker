@@ -11,7 +11,7 @@ from django.views.generic.edit import CreateView, UpdateView
 from django.views.generic.edit import DeleteView
 
 from .functions import send_email
-from .models import Vessel, UserProfile
+from .models import Port, UserProfile, Vessel
 
 class RecaptchaMixin:
     subject = 'ZimTracker Request'
@@ -93,3 +93,6 @@ class VesselDetail(DetailView):
         context = super().get_context_data(**kwargs)
         context['GOOGLEMAPS_API_KEY'] = settings.GOOGLEMAPS_API_KEY
         return context
+
+class PortList(ListView):
+    model = Port
