@@ -29,7 +29,7 @@
     <div id="id_messageSend" class="collapse show">
       <p><strong>Status: </strong></p>
       <p>IMO: {{ vessel.imo }}</p>
-      <p>MarineTraffic ID: {{ vessel.ship_id }}</p>
+      <p>MarineTraffic ID: <a href="https://www.marinetraffic.com/en/ais/details/ships/shipid:{{ vessel.ship_id }}/">{{ vessel.ship_id }}</a></p>
       <p>Location: {{ vessel.get_log.latitude }}, {{ vessel.get_log.longitude }}</p>
       <p>Destination: {{ vessel.get_log.destination }}<p>
       <p>ETA: {{ vessel.get_log.eta }}</p>

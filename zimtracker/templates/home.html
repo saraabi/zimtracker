@@ -3,22 +3,22 @@
 
 
 {% block header %}
-<div class="Hero" style="height:600px;width:100vw;background:black;overflow:hidden;background: -webkit-linear-gradient(rgba(206, 17, 38, 0.9),rgba(150,150,150, 2), rgba(0,122,61, 0.9));"> 
+<!-- <div class="Hero" style="height:600px;width:100vw;background:black;overflow:hidden;background: -webkit-linear-gradient(rgba(206, 17, 38, 0.9),rgba(150,150,150, 2), rgba(0,122,61, 0.9));"> 
   <section style="height:100%" class='hero-header-text'>
     <div style="height:93%;display:flex;justify-content:center;align-items:center;flex-direction:column">
     <h1 style="font-size: 90px;font-family:'Montserrat';font-weight:100;" class="text-dark text-center">ZIM TRACKER</h1>
     <h2 style="font-family:'Montserrat';font-weight:120;" class="text-dark text-center pb-5">Stop Israeli Apartheid Profiteering</h2>
     <a href="{% url 'vessel-list' %}" class="text-dark"><button class="btn btn-outline-light btn-lg">Track Ship</button></a>
     </div>
-<!--     <p class="pt-auto ml-auto w-25"><a href="https://www.facebook.com/movementphotographer/" class="text-white">Photo Credit: Brooke Anderson</a></p> -->
   </section>
-</div>
+</div> -->
+<div id="id_hero" class="Hero" style="height:600px;width:100vw;"></div>
 {% endblock %}
 {% block main %}
 <!-- <div style="background-color:#27241D" class="w-100"> -->
 <div class="w-100 bg-dark pb-5">
   <div class="w-75 mx-auto py-5">
-    <h3 style="font-family:'Montserrat';font-size:2.5rem;font-weight:200;" class="pb-5 text-white text-center">Track Israeli Ships</h3>
+    <h3 style="font-family:'Montserrat';font-size:2.5rem;font-weight:200;" class="pb-5 text-white text-center">Stop Israeli Apartheid Profiteering</h3>
     <div class="d-flex flex-column flex-lg-row justify-content-between">
       <div class="mb-4">
         <div style="border-radius:.75rem;" class="card">
@@ -102,4 +102,44 @@
       });
     });
   </script>
+{% endblock %}
+{% block javascript %}
+<script>
+  let map;
+
+  function initMap() {
+    map = new google.maps.Map(document.getElementById("id_hero"), {
+      center: { lat: 40, lng: -100 },
+      zoom: 4,
+    });
+
+    svgMarker = {
+      path: "M20 21c-1.39 0-2.78-.47-4-1.32-2.44 1.71-5.56 1.71-8 0C6.78 20.53 5.39 21 4 21H2v2h2c1.38 0 2.74-.35 4-.99 2.52 1.29 5.48 1.29 8 0 1.26.65 2.62.99 4 .99h2v-2h-2zM3.95 19H4c1.6 0 3.02-.88 4-2 .98 1.12 2.4 2 4 2s3.02-.88 4-2c.98 1.12 2.4 2 4 2h.05l1.89-6.68c.08-.26.06-.54-.06-.78s-.34-.42-.6-.5L20 10.62V6c0-1.1-.9-2-2-2h-3V1H9v3H6c-1.1 0-2 .9-2 2v4.62l-1.29.42c-.26.08-.48.26-.6.5s-.15.52-.06.78L3.95 19zM6 6h12v3.97L12 8 6 9.97V6",
+      fillOpacity: 0.7,
+      strokeWeight: 0,
+      rotation: 0,
+      scale: 1,
+      anchor: new google.maps.Point(0,0),
+    }
+
+    {% for vessel in vessel_list %}
+    {% if vessel.get_log.latitude and vessel.get_log.longitude %}
+
+    new google.maps.Marker({
+      position: { lat:{{ vessel.get_log.latitude }}, lng: {{ vessel.get_log.longitude }} },
+      map,
+      title: "{{ vessel.get_log.timestamp }}",
+      icon: svgMarker,
+    });
+    {% endif %}
+    {% endfor %}
+
+    // new google.maps.Marker({
+    //   position: { lat:{{ vessel.get_log.latitude }}, lng: {{ vessel.get_log.longitude }} },
+    //   map,
+      
+    //   title: "Hello World!",
+    // });
+  }
+</script>
 {% endblock %}

@@ -53,7 +53,8 @@ class Home(RecaptchaMixin, View):
     def get_context_data(self, **kwargs):
         context = {
             'vessel_list': Vessel.objects.all(),
-            'captcha_key': settings.RECAPTCHA_API_KEY
+            'captcha_key': settings.RECAPTCHA_API_KEY,
+            'GOOGLEMAPS_API_KEY': settings.GOOGLEMAPS_API_KEY,
         }
         return context
 

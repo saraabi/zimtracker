@@ -52,8 +52,10 @@ def update_vessel_data(v_data):
             setattr(log, field, value.value)
     # log.eta = getattr(v_data, 'eta', None)
     log.save()
+    print('Log saved')
     if created:
         send_updates(log)
+        print('Text update delivered')
     print('Log created')
 
 def send_updates(log):
